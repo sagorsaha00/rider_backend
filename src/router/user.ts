@@ -1,8 +1,12 @@
-import express from "express";
+import express, { Router } from "express";
 import { RinderController } from "@/controller/userController";
-import { RiderInfo } from "@/db/schema";
+import RiderInfo from "@/db/schema";
 
-const router = express.Router();
+const router: Router = express.Router();
+const riderController = new RinderController(RiderInfo);
 
-const riderInfo = new RiderInfo();
-const riderController = new RinderController(riderInfo);
+router.post("/riderregister", riderController.createRider);
+router.post("/riderLoginUser", riderController.loginRider);
+router.post("/riderApprove", riderController.updateVerificationStatus);
+
+export const riderRouter = router;

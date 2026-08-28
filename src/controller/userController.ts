@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { RiderInfo } from "@/db/schema";
+import RiderInfo from "@/db/schema";
 export class RinderController {
   constructor(private riderInfo: typeof RiderInfo) {}
   createRider = async (req: Request, res: Response) => {
@@ -17,11 +17,11 @@ export class RinderController {
         workPreferences,
         documents,
       } = req.body;
+      console.log("req body", req.body);
 
       if (!fullName || !dateOfBirth || !phoneNumber || !email || !password) {
         return res.status(400).json({
-          message:
-            "fullName, dateOfBirth, phoneNumber, email, and password are required.",
+          message: "something missing",
         });
       }
       const saltRounds = 10;
@@ -52,4 +52,73 @@ export class RinderController {
       });
     }
   };
+  loginRider = async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+
+      // 1. Validate request body
+      if (!email || !password) {
+        return res.status(400).json({
+          success: false,
+          message: "Please provide both email and password.",
+        });
+      }
+
+      const rider = await this.riderInfo.findOne({ email });
+      if (!rider) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid email or password.",
+        });
+      }
+
+      // 3. Compare hashed password
+      const isPasswordMatch = await bcrypt.compare(
+        password,
+        rider.passwordHash,
+      );
+      if (!isPasswordMatch) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid email or password.",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Login successful",
+        rider: {
+          id: rider._id,
+          fullName: rider.fullName,
+          email: rider.email,
+        },
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: (error as Error).message,
+      });
+    }
+  };
+  updateVerificationStatus = async (req: Request, res: Response) => {
+    const { riderId, status, rejectionReason } = req.body;
+    if (status === "rejected" && !rejectionReason) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "A rejection reason is required when setting status to rejected.",
+      });
+    }
+
+    const updatedRider = await this.riderInfo.findByIdAndUpdate(
+      riderId,
+      {
+        verificationStatus: status,
+        rejectionReason: status === status ? rejectionReason : null,
+      },
+      { new: true },
+    );
+    return res.status(200).json({ success: true, data: updatedRider });
+  };
+  
 }

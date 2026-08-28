@@ -50,4 +50,6 @@ const riderSchema = new Schema<IRider>(
   },
 );
 
-export const RiderInfo = model<IRider>("RiderInfo", riderSchema);
+const RiderInfo = model<IRider>("RiderInfo", riderSchema);
+
+export default RiderInfo;
