@@ -1,6 +1,9 @@
 import { Schema, model } from "mongoose";
 import type { IRider } from "@/lib/type";
-
+export enum UserRole {
+  RIDER = "rider",
+  ADMIN = "admin",
+}
 // Mongoose Schema
 const riderSchema = new Schema<IRider>(
   {
@@ -14,6 +17,7 @@ const riderSchema = new Schema<IRider>(
       lowercase: true,
       trim: true,
     },
+
     passwordHash: { type: String, required: true },
     address: {
       street: { type: String },
@@ -44,6 +48,12 @@ const riderSchema = new Schema<IRider>(
       default: "pending",
     },
     rejectionReason: { type: String },
+    role: {
+      type: String,
+      enum: Object.values(UserRole),  
+      default: UserRole.RIDER,
+      required: false,
+    },
   },
   {
     timestamps: true,

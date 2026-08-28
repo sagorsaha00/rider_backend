@@ -35,4 +35,5 @@ export interface IRider extends Document {
   };
   verificationStatus: VerificationStatus;
   rejectionReason?: string;
+  role?: string;
 }
