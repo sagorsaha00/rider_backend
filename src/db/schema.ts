@@ -1,7 +1,5 @@
 import { Schema, model } from "mongoose";
 import type { IRider } from "@/lib/type";
- 
-
 
 // Mongoose Schema
 const riderSchema = new Schema<IRider>(
@@ -52,4 +50,4 @@ const riderSchema = new Schema<IRider>(
   },
 );
 
-export const Rider = model<IRider>("Rider", riderSchema);
+export const RiderInfo = model<IRider>("RiderInfo", riderSchema);
