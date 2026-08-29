@@ -43,6 +43,7 @@ export class RinderController {
       return res.status(201).json({
         success: true,
         message: "Rider registered successfully",
+        id: newRider,
         data: newRider,
       });
     } catch (error: any) {
