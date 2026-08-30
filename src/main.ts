@@ -7,7 +7,10 @@ import { riderRouter } from "../src/router/user.js";
 dotenv.config();
 const PORT = 5000;
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: [
+    "http://localhost:3000",
+    "https://rider-frontend-client-server.vercel.app/",
+  ],
   optionsSuccessStatus: 200,
 };
 const app: Express = express();
