@@ -1,8 +1,8 @@
 import express, { type Express } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { connectDB } from "@/db/index";
-import { riderRouter } from "@/router/user";
+import { connectDB } from "../src/db/index.js";
+import { riderRouter } from "../src/router/user.js";
 
 dotenv.config();
 const PORT = 5000;

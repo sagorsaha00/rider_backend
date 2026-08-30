@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import RiderInfo from "@/db/schema";
+import RiderInfo from "../db/schema.js";
 export class RinderController {
   constructor(private riderInfo: typeof RiderInfo) {}
   createRider = async (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 import express, { Router } from "express";
-import RiderInfo from "@/db/schema";
-import { adminController } from "@/controller/adminController";
+import RiderInfo from "../db/schema.js";
+import { adminController } from "../controller/adminController.js";
 
 const router: Router = express.Router();
 const adminControllerInstance = new adminController(RiderInfo);

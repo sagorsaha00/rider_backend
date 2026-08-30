@@ -1,5 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-import type { IRider } from "@/lib/type";
+import type { IRider } from "../lib/type.js";
 
 enum UserRole {
   RIDER = "rider",

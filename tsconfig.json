@@ -2,32 +2,30 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "module": "esnext",
-    "target": "es2022",
-    "lib": ["esnext"],
+
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "lib": ["ES2022"],
     "types": ["node"],
- 
+
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
+    "strict": true,
+    "skipLibCheck": true,
+
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    "ignoreDeprecations": "6.0",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true
+    "moduleDetection": "force"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "api/**/*"]
+
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

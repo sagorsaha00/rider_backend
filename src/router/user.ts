@@ -1,6 +1,6 @@
 import express, { Router } from "express";
-import { RinderController } from "@/controller/userController";
-import RiderInfo from "@/db/schema";
+import { RinderController } from "../controller/userController.js";
+import RiderInfo from "../db/schema.js";
 
 const router: Router = express.Router();
 const riderController = new RinderController(RiderInfo);
