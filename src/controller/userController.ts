@@ -43,7 +43,6 @@ export class RinderController {
       return res.status(201).json({
         success: true,
         message: "Rider registered successfully",
-        id: newRider,
         data: newRider,
       });
     } catch (error: any) {
@@ -84,15 +83,18 @@ export class RinderController {
           message: "Invalid email or password.",
         });
       }
-
+      //  fullName: data.fullName,
+      //         email: data.email,
+      //         phoneNumber: data.phoneNumber,
+      //         dateOfBirth: data.dateOfBirth,
+      //         imageUrl: data.profilePhotoUrl,
+      //         role: data.role,
+      //         RegisterTime: data.createdAt,
+      //         status: data.verificationStatus,
       return res.status(200).json({
         success: true,
         message: "Login successful",
-        rider: {
-          id: rider._id,
-          fullName: rider.fullName,
-          email: rider.email,
-        },
+        rider: rider,
       });
     } catch (error) {
       return res.status(500).json({
@@ -121,5 +123,30 @@ export class RinderController {
     );
     return res.status(200).json({ success: true, data: updatedRider });
   };
-  
+  singleData = async (req: Request, res: Response) => {
+    const { riderId } = req.query;
+
+    try {
+      const responseData = await this.riderInfo.findById(riderId);
+
+      if (!responseData) {
+        return res.status(404).json({
+          success: false,
+          message: "Rider not found",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Rider data retrieved successfully",
+        data: responseData,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to retrieve rider data",
+        error,
+      });
+    }
+  };
 }
