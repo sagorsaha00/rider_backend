@@ -15,8 +15,7 @@ export const connectDB = async (): Promise<typeof mongoose> => {
     return cachedPromise;
   }
 
-  const mongoURL =
-    "mongodb+srv://mrartimas24_db_user:rw4XedVRoSSeaThy@rider.atkggmt.mongodb.net";
+  const mongoURL = process.env.CONNECTION_URL;
 
   if (!mongoURL) {
     throw new Error("MONGODB_URL is not defined");
