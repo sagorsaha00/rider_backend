@@ -1,7 +1,7 @@
 import express, { type Express } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { db } from "@/db/index";
+import { connectDB } from "@/db/index";
 import { riderRouter } from "@/router/user";
 
 dotenv.config();
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 async function startServer() {
   app.listen(PORT, async () => {
-    await db();
+    await connectDB();
     console.log("ok");
     console.log(`Server is running on port ${PORT}`);
   });
