@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type Express } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { db } from "@/db/index";
@@ -10,7 +10,7 @@ var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
 };
-const app = express();
+const app: Express = express();
 app.use(express.json());
 app.use(cors(corsOptions));
 
@@ -30,3 +30,5 @@ async function startServer() {
 }
 
 startServer();
+
+export default app;
