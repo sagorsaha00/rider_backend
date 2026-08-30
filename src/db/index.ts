@@ -1,40 +1,48 @@
 import mongoose from "mongoose";
-import dns from "node:dns";
 
-dns.setServers(["8.8.8.8"]);
+let cachedConnection: typeof mongoose | null = null;
+let cachedPromise: Promise<typeof mongoose> | null = null;
 
-// const uri: string = process.env.CONNECTION_URL as string;
-const uri =
-  "mongodb+srv://mrartimas24_db_user:rw4XedVRoSSeaThy@rider.atkggmt.mongodb.net/";
-
-if (!uri) {
-  throw new Error("CONNECTION_URL is not defined in environment variables.");
-}
-
-const options: mongoose.ConnectOptions = {
-  maxPoolSize: 10,
-  minPoolSize: 1,
-  maxIdleTimeMS: 30000,
-  connectTimeoutMS: 10000,
-};
-
-let isConnected = false;
-
-export async function db() {
-  if (isConnected) {
-    return mongoose.connection;
+export const connectDB = async (): Promise<typeof mongoose> => {
+  // Already connected
+  if (cachedConnection && mongoose.connection.readyState === 1) {
+    console.log("✅ Using existing MongoDB connection");
+    return cachedConnection;
   }
+
+  // Connection already in progress
+  if (cachedPromise) {
+    return cachedPromise;
+  }
+
+  const mongoURL = process.env.CONNECTION_URL;
+
+  if (!mongoURL) {
+    throw new Error("MONGODB_URL is not defined");
+  }
+
+  cachedPromise = mongoose.connect(mongoURL, {
+    maxPoolSize: 10,
+    minPoolSize: 1,
+    maxIdleTimeMS: 30000,
+    serverSelectionTimeoutMS: 10000,
+    connectTimeoutMS: 10000,
+  });
 
   try {
-    const conn = await mongoose.connect(uri, options);
-    isConnected = true;
-    console.log("✅ MongoDB Connected via Mongoose");
-    return conn.connection;
+    cachedConnection = await cachedPromise;
+
+    console.log("✅ MongoDB Connected");
+
+    return cachedConnection;
   } catch (error) {
-    isConnected = false;
+    cachedPromise = null;
+    cachedConnection = null;
+
     console.error("❌ MongoDB Connection Error:", error);
+
     throw error;
   }
-}
+};
 
 export default mongoose;
