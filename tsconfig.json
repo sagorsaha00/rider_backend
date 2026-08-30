@@ -6,7 +6,7 @@
     "target": "es2022",
     "lib": ["esnext"],
     "types": ["node"],
-
+ 
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
