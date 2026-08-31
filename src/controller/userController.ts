@@ -103,26 +103,7 @@ export class RinderController {
       });
     }
   };
-  updateVerificationStatus = async (req: Request, res: Response) => {
-    const { riderId, status, rejectionReason } = req.body;
-    if (status === "rejected" && !rejectionReason) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "A rejection reason is required when setting status to rejected.",
-      });
-    }
-
-    const updatedRider = await this.riderInfo.findByIdAndUpdate(
-      riderId,
-      {
-        verificationStatus: status,
-        rejectionReason: status === status ? rejectionReason : null,
-      },
-      { new: true },
-    );
-    return res.status(200).json({ success: true, data: updatedRider });
-  };
+  
   singleData = async (req: Request, res: Response) => {
     const { riderId } = req.query;
 

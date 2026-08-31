@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "../src/db/index.js";
 import { riderRouter } from "../src/router/user.js";
-
+import { adminRouter } from "./router/admin.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
@@ -47,6 +47,7 @@ const dbMiddleware = async (
 app.use(dbMiddleware);
 
 app.use("/api/user", riderRouter);
+app.use("/api/admin", adminRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({

@@ -7,6 +7,5 @@ const riderController = new RinderController(RiderInfo);
 
 router.post("/riderregister", riderController.createRider);
 router.post("/riderLoginUser", riderController.loginRider);
-router.post("/riderApprove", riderController.updateVerificationStatus);
 
 export const riderRouter = router;
