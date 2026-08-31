@@ -138,10 +138,11 @@ export class adminController {
   };
   deleteRider = async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-
-      // Find by _id and delete from MongoDB
-      const deletedRider = await this.riderInfo.findByIdAndDelete(id);
+      console.log("delete api hit");
+      const { riderId } = req.params;
+      console.log("id", riderId);
+      const deletedRider = await this.riderInfo.findByIdAndDelete(riderId);
+      console.log("deleteRider", deletedRider);
 
       if (!deletedRider) {
         return res.status(404).json({
