@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import dns from "node:dns";
 
 dns.setServers(["8.8.8.8"]);
+
 let cachedConnection: typeof mongoose | null = null;
 let cachedPromise: Promise<typeof mongoose> | null = null;
 
@@ -29,6 +30,7 @@ export const connectDB = async (): Promise<typeof mongoose> => {
     maxIdleTimeMS: 30000,
     serverSelectionTimeoutMS: 10000,
     connectTimeoutMS: 10000,
+    bufferCommands: false,
   });
 
   try {
