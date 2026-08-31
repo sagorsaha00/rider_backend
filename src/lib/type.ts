@@ -54,3 +54,11 @@ export interface IRider extends Document {
   rejectionReason?: string;
   role?: string;
 }
+
+export interface adminInterFace extends Document {
+  fullName: string;
+  email: string;
+  passwordHash: string;
+  profilePhotoUrl?: string;
+  role?: string;
+}

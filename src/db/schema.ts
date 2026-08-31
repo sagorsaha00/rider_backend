@@ -100,6 +100,7 @@ const riderSchema = new Schema<IRider>(
   },
 );
 
+
 const RiderInfo = model<IRider>("RiderInfo", riderSchema);
 
 export default RiderInfo;
